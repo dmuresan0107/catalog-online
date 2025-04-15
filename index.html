@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>Catalog Online pentru Studenți</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .catalog {
+      width: 90%;
+      margin: auto;
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Catalog Online pentru Studenți</h1>
+  <div class="catalog">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nume</th>
+          <th>Prenume</th>
+          <th>Materie</th>
+          <th>Notă</th>
+        </tr>
+      </thead>
+      <tbody id="catalog-body">
+        <!-- Rândurile vor fi populate din JavaScript -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Lista de studenți
+    const catalogStudenti = [
+      { id: 1, nume: "Popescu", prenume: "Ion", materie: "Matematică", nota: 8.5 },
+      { id: 2, nume: "Ionescu", prenume: "Maria", materie: "Fizică", nota: 9.0 },
+      { id: 3, nume: "Georgescu", prenume: "Andrei", materie: "Informatică", nota: 7.5 },
+      { id: 4, nume: "Dumitrescu", prenume: "Elena", materie: "Chimie", nota: 8.0 },
+      { id: 5, nume: "Vasilescu", prenume: "Mihai", materie: "Biologie", nota: 9.5 }
+    ];
+
+    // Funcție pentru popularea tabelului cu datele studenților
+    function populeazaCatalog() {
+      const catalogBody = document.getElementById("catalog-body");
+      
+      catalogStudenti.forEach(student => {
+        const row = document.createElement("tr");
+        
+        const celulaId = document.createElement("td");
+        celulaId.textContent = student.id;
+        row.appendChild(celulaId);
+        
+        const celulaNume = document.createElement("td");
+        celulaNume.textContent = student.nume;
+        row.appendChild(celulaNume);
+        
+        const celulaPrenume = document.createElement("td");
+        celulaPrenume.textContent = student.prenume;
+        row.appendChild(celulaPrenume);
+        
+        const celulaMaterie = document.createElement("td");
+        celulaMaterie.textContent = student.materie;
+        row.appendChild(celulaMaterie);
+        
+        const celulaNota = document.createElement("td");
+        celulaNota.textContent = student.nota;
+        row.appendChild(celulaNota);
+        
+        catalogBody.appendChild(row);
+      });
+    }
+
+    // Apelăm funcția la încărcarea paginii
+    window.onload = populeazaCatalog;
+  </script>
+</body>
+</html>
