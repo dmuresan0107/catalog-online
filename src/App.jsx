@@ -7,17 +7,20 @@ import Login from "./Login";
 import PaginaProfesor from "./Professors";
 import PaginaStudent from "./PaginaStudent";
 
-function App() {
+export default function App() {
   const [role, setRole] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
+        // 🔄 încercăm să luăm rolul din Firestore
         const ref = doc(db, "users", user.uid);
         const snap = await getDoc(ref);
         const data = snap.data();
-        setRole(data?.role || "");
+        if (data?.role) {
+          setRole(data.role);
+        }
       } else {
         setRole("");
       }
@@ -34,14 +37,14 @@ function App() {
   if (loading) return <div className="text-center mt-20">Se încarcă...</div>;
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans text-gray-800 px-4 py-8">
+    <div className="min-h-screen bg-gray-100 font-sans text-gray-800">
       {!role ? (
-        <Login onLogin={(userRole) => setRole(userRole)} />
+        <Login onLogin={() => setLoading(true)} />
       ) : (
         <>
           <button
             onClick={handleLogout}
-            className="fixed top-4 right-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow"
+            className="fixed top-4 right-4 bg-red-500 text-white px-4 py-2 rounded shadow"
           >
             Logout
           </button>
@@ -51,5 +54,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
